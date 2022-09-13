@@ -37,7 +37,9 @@
                     </div>
                     @endif
                     <div class="card-header">
+                        @if(Auth::user()->role == 'admin')
                         <a href="{{route('sampah.create')}}" class="btn btn-primary pull-right">Tambah</a>
+                        @endif
                         <strong class="card-title">{{$pagename}}</strong>
                     </div>
                    
@@ -52,7 +54,9 @@
                                     <th>Gambar </th>
                                     <th>Harga</th>
                                     <th>Deskripsi</th>
+                                    @if(Auth::user()->role == 'admin')
                                     <th>Aksi</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,6 +71,7 @@
                                     <td><img src="{{url('images/'.$row->gambar)}}" alt="" width="50" height="50"></td>
                                     <td>@currency($row->harga)</td>
                                     <td>{{$row->deskripsi}}</td>
+                                    @if(Auth::user()->role == 'admin')
                                     <td>
                                         
                                         <form class="form-inline" action="{{route('sampah.destroy', $row ->id)}}" method="post" >
@@ -79,6 +84,7 @@
                                     
 
                                     </td>
+                                    @endif
                                     
                                 </tr>
 

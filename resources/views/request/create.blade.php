@@ -2,7 +2,7 @@
 
 @section('content')
 
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <div class="breadcrumbs">
     <div class="col-sm-4">
         <div class="page-header float-left">
@@ -49,43 +49,25 @@
                         </div>
 
                         @endif
-                        <form action="{{route('produk.store')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="produk-form">
+                        <form action="{{route('request.store')}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="produk-form">
                             @csrf
                             <div class="row form-group">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Nama Produk</label></div>
-                                <div class="col-12 col-md-9"><input type="text" id="text-input" name="nama" placeholder="Text" class="form-control"></div>
+                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Jenis Sampah</label></div>
+                                <div class="col-12 col-md-9">
+                                <select id="sampah_id" name="sampah_id[]" class="mul-select form-control" multiple='multiple' >
+                                        @foreach($sampah as $s)
+                                        <option value={{$s ->id}}>{{$s -> jenis_sampah}}</option>
+                                        @endforeach
+                               
+                                    </select>
+                                </div>
                             </div>
                           
                             <div class="row form-group">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Harga</label></div>
-                                <div class="col-12 col-md-9"><input type="text" id="text-input" name="harga" placeholder="Text" class="form-control"></div>
+                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Tanggal Pengambilan</label></div>
+                                <div class="col-12 col-md-9"><input type="date" id="text-input" name="tanggal_pengambilan" placeholder="Text" class="form-control"></div>
                             </div>
-                            
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Stok</label></div>
-                                <div class="col-1 col-md-1"><input type="number" id="text-input" name="stok" placeholder="1" value="1" class="form-control"></div>
-                            </div>
-
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Deskripsi</label></div>
-                                <!-- <div class="col-12 col-md-9"><input type="text" id="text-input" name="deskripsi" placeholder="Text" class="form-control"></div> -->
-                                <textarea name="deskripsi" class="ml-3" id="" cols="100%" rows="5" form="produk-form"></textarea>
-                            </div>
-                            
-
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label for="file-input" class=" form-control-label">File Gambar</label></div>
-                                <div class="col-12 col-md-9">
-                                    <input type="file" id="file" name="images" class="form-control-file" value="{{ old('images') }}">
-                                </div>
-
-                                @error('images')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                               
-                            </div>
+            
 
 
            
@@ -106,6 +88,21 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+
+            $(document).ready(function () {
+
+                $("#sampah_id").select2({
+
+                    placeholder: "Silahkan Pilih"
+
+                });
+
+            });
+
+        </script>
 
 
 @endsection

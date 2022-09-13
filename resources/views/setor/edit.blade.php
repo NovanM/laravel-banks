@@ -48,7 +48,7 @@
                         </div>
 
                         @endif
-                        <form action="{{route('sampah.update', $data->id)}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="sampah-form">
+                        <form action="{{route('setor.update', $data->id)}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="sampah-form">
                             @method('PATCH')
                             @csrf
 

@@ -16,7 +16,7 @@ class CreateRequestSetorsTable extends Migration
         Schema::create('request_setors', function (Blueprint $table) {
             $table->id();
             $table->integer('warga_id');
-            $table->integer('sampah_id');
+            $table->string('sampah_id');
             $table->date('tanggal_pengambilan');
             $table->string('status');
             $table->timestamps();

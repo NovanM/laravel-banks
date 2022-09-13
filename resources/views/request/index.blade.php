@@ -40,7 +40,7 @@
                         <a href="{{route('request.create')}}" class="btn btn-primary pull-right">Tambah</a>
                         <strong class="card-title">{{$pagename}}</strong>
                     </div>
-                   
+
                     <div class="card-body">
                         <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
                             <thead>
@@ -57,26 +57,47 @@
                             <tbody>
 
                                 @foreach($data as $i => $row)
-                               
+
                                 <tr>
                                     <td>{{++$i}}</td>
-                                    <td>{{$row->nama}}</td>
+                                    <td>{{$row->warga->nama}}</td>
                                     <td>{{$row->tanggal_pengambilan}}</td>
-                                    <td>{{$row->sampah->jenis_sampah}}</td>
-                                    <td>{{$row->warga->alamat}}</td>
-                                    <td>{{$row->status}}</td>
                                     <td>
-                                        
-                                        <form class="form-inline" action="{{route('request.destroy', $row ->id)}}" method="post" >
+                                        <?php
+                                            $jenissampah = [];
+                                            foreach ($allsampah as $value) {
+                                                foreach (explode(",", $row->sampah_id) as $key) {
+                                                    if ($value->id == $key) {
+                                                        array_push($jenissampah, $value->jenis_sampah);
+                                                    }
+                                                }
+                                            }
+                                            $stringarray = implode(', ', $jenissampah);
+                                            
+                                        ?>
+                                       {{ $stringarray}}
+                                    </td>
+                                    <td>{{$row->warga->alamat}}</td>
+                                    <td>
+                                        @if($row->status !='pending')
+                                        <label class="badge badge-success">Success</label>
+                                        @else
+                                        <label class="badge badge-warning">Pending</label>
+                                        @endif
+                                    </td>
+
+                                    <td>
+
+                                        <form class="form-inline" action="{{route('request.destroy', $row ->id)}}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <a href="{{route('request.edit', $row ->id)}}" class="btn btn-outline-success " ><i class="menu-icon fa fa-pencil"></i></a>
-                                            <button class="btn btn-outline-danger ml-3"  type="submit"><i class="menu-icon fa fa-trash"></i></button> 
+                                            <a href="{{route('request.edit', $row ->id)}}" class="btn btn-outline-success "><i class="menu-icon fa fa-pencil"></i></a>
+                                            <button class="btn btn-outline-danger ml-3" type="submit"><i class="menu-icon fa fa-trash"></i></button>
                                         </form>
-                                    
+
 
                                     </td>
-                                    
+
                                 </tr>
 
                                 @endforeach

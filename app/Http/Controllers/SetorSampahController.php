@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\RequestSetor;
+use App\Sampah;
 use App\SetorSampah;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,12 +21,13 @@ class SetorSampahController extends Controller
         //
 
         $pagename = 'Riwayat Setor Sampah';
+        $allsampah = Sampah::all();
         if (Auth::user()->role=='admin') {
             $data = SetorSampah::all();
-            return view('setor.index',compact('pagename','data'));
+            return view('setor.index',compact('pagename','data','allsampah'));
         }else {
             $data = SetorSampah::where('warga_id', Auth::user()->id)->get();
-            return view('setor.index',compact('pagename','data'));
+            return view('setor.index',compact('pagename','data','allsampah'));
         }
 
     }
@@ -36,6 +40,9 @@ class SetorSampahController extends Controller
     public function create()
     {
         //
+        $pagename = 'Input Data Setor Sampah';
+        return view('setor.create', compact('pagename'));
+
     }
 
     /**
@@ -47,6 +54,35 @@ class SetorSampahController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'request_id' => 'required|numeric',
+            'jumlah_setor' => 'required|numeric',
+            'method' => 'required',
+            'kuantitas_sampah' => 'required'
+        ]);
+
+        $requestsetor = RequestSetor::find($request->get('request_id'));
+        $requestsetor->status = 'Success';
+    
+        $data = SetorSampah::create([
+            'warga_id' =>$requestsetor->warga_id,
+            'request_id' => $request->get('request_id'),
+            'jumlah_setor' => $request->get('jumlah_setor'),
+            'kuantitas_sampah' => $request->get('kuantitas_sampah'),
+            'method' => $request->get('method'),
+        ]);
+        if ($request->get('method') == "Top Up") {
+            $warga = User::find($data->warga_id);
+            $warga->saldo +=(double)$data->jumlah_setor;
+            $warga->save();
+        }
+       
+        $requestsetor->save();
+        $data->save();  
+
+
+
+        return redirect('home/setor')->with('success','Data Setor Sampah Ditambahkan');
     }
 
     /**
@@ -69,6 +105,10 @@ class SetorSampahController extends Controller
     public function edit($id)
     {
         //
+        $pagename = 'Edit Setor Sampah';
+        $data = SetorSampah::find($id);
+    
+        return view('setor.edit',compact('pagename','data'));
     }
 
     /**
@@ -81,6 +121,11 @@ class SetorSampahController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+
+
+
+        return redirect('home/setor')->with('success','Data Setor Sampah Diperbaruhi');
     }
 
     /**
@@ -92,5 +137,8 @@ class SetorSampahController extends Controller
     public function destroy($id)
     {
         //
+        $data = SetorSampah::find($id);
+        $data->delete();
+        return redirect('home/setor')->with('success','Data Setor Sampah Dihapus');
     }
 }

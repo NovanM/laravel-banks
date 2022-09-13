@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\RequestSetor;
+use App\Sampah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,12 +18,13 @@ class RequestSetorController extends Controller
     {
         //
         $pagename = 'Request Setor Sampah';
-        if (Auth::user()->role=='admin') {
-            $data = RequestSetor::all();
-            return view('request.index',compact('pagename','data'));
-        }else {
-            $data = RequestSetor::where('warga_id', Auth::user()->id)->get();
-            return view('request.index',compact('pagename','data'));
+        $allsampah = Sampah::all();
+        if (Auth::user()->role == 'admin') {
+            $data = RequestSetor::orderBy('created_at','desc')->get();
+            return view('request.index', compact('pagename', 'data','allsampah'));
+        } else {
+            $data = RequestSetor::where('warga_id', Auth::user()->id)->orderBy('created_at','desc')->get();
+            return view('request.index', compact('pagename', 'data', 'allsampah'));
         }
     }
 
@@ -34,6 +36,9 @@ class RequestSetorController extends Controller
     public function create()
     {
         //
+        $pagename = 'Request Setor Sampah';
+        $sampah = Sampah::all();
+        return view('request.create', compact('pagename', 'sampah'));
     }
 
     /**
@@ -45,6 +50,17 @@ class RequestSetorController extends Controller
     public function store(Request $request)
     {
         //
+
+        $user = Auth::user();
+
+        $data = RequestSetor::create([
+            'warga_id' => $user->id,
+            'sampah_id' => implode(",", $request->get('sampah_id')),
+            'tanggal_pengambilan' => $request->get('tanggal_pengambilan'),
+        ]);
+
+        $data->save();
+        return redirect('home/request')->with('success', 'Data Request Setor Ditambahkan');
     }
 
     /**
@@ -67,6 +83,10 @@ class RequestSetorController extends Controller
     public function edit($id)
     {
         //
+        $data = RequestSetor::find($id);
+        $allsampah = Sampah::all();
+        $pagename = 'Edit Request Setor Sampah';
+        return view('request.edit', compact('data', 'allsampah', 'pagename'));
     }
 
     /**
@@ -79,6 +99,12 @@ class RequestSetorController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $data = RequestSetor::find($id);
+        $data->sampah_id = implode(",", $request->get('sampah_id'));
+        $data->tanggal_pengambilan = $request->get('tanggal_pengambilan');
+
+        $data->save();
+        return redirect('home/request')->with('success', 'Data Request Setor Diperbaruhi');
     }
 
     /**
@@ -90,5 +116,8 @@ class RequestSetorController extends Controller
     public function destroy($id)
     {
         //
+        $data = RequestSetor::find($id);
+        $data->delete();
+        return redirect('home/request')->with('success', 'Data Request Setor dihapus');
     }
 }

@@ -19,6 +19,7 @@ class CreateSetorSampahsTable extends Migration
             $table->integer('request_id');
             $table->integer('jumlah_setor');
             $table->integer('kuantitas_sampah');
+            $table->string('method');
             $table->timestamps();
         });
     }

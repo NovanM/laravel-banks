@@ -1,6 +1,7 @@
 @extends('admin.layout.master')
 
 @section('content')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
 <div class="breadcrumbs">
     <div class="col-sm-4">
@@ -48,56 +49,31 @@
                         </div>
 
                         @endif
-                        <form action="{{route('sampah.update', $data->id)}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="sampah-form">
+                        <form action="{{route('request.update', $data->id)}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="sampah-form">
                             @method('PATCH')
                             @csrf
 
 
-
-
                             <div class="row form-group">
                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Jenis Sampah</label></div>
-                                <div class="col-12 col-md-9"><input type="text" id="text-input" name="jenis_sampah" value="{{$data->jenis_sampah}}" placeholder="Text" class="form-control"></div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Nama Sampah</label></div>
-                                <div class="col-12 col-md-9"><input type="text" id="text-input" name="nama" value="{{$data->nama}}" placeholder="Text" class="form-control"></div>
-                            </div>
-
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Harga</label></div>
-                                <div class="col-12 col-md-9"><input type="text" id="text-input" name="harga" value="{{$data->harga}}" placeholder="Text" class="form-control"></div>
-                            </div>
-
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Satuan</label></div>
-                                <div class="col-1 col-md-1"><input type="number" id="text-input" name="satuan" value="{{$data->satuan}}" placeholder="1" value="1" class="form-control"></div>
-                            </div>
-
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Deskripsi</label></div>
-                                <!-- <div class="col-12 col-md-9"><input type="text" id="text-input" name="deskripsi" placeholder="Text" class="form-control"></div> -->
-                                <textarea name="deskripsi" class="ml-3" id="" cols="100%" rows="5" form="sampah-form">{{$data->deskripsi}}</textarea>
-                            </div>
-
-
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label for="file-input" class=" form-control-label">File Gambar</label></div>
                                 <div class="col-12 col-md-9">
-                                    @empty($data->gambar)
-                                    @else
-                                    <img src="{{url('images/'.$data->gambar)}}" width="100" height="100" class="mb-3">
-                                    @endempty
-                                    <input type="file" id="file" name="images" class="form-control-file" value="{{ old('images') }}">
+                                    <select id="sampah_id" name="sampah_id[]" class="mul-select form-control" multiple='multiple'>
+                                        @foreach($allsampah as $s)
+                                        <option value="{{$s ->id}}" @if(in_array($s->id,explode(',',$data->sampah_id)))
+                                            selected
+                                            @endif
+                                            >{{$s -> jenis_sampah}}</option>
+                                        @endforeach
+
+                                    </select>
                                 </div>
-
-                                @error('images')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-
                             </div>
+
+                            <div class="row form-group">
+                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Tanggal Pengambilan</label></div>
+                                <div class="col-12 col-md-9"><input type="date" id="text-input" name="tanggal_pengambilan" value="{{$data->tanggal_pengambilan}}" placeholder="Text" class="form-control"></div>
+                            </div>
+
 
 
                             <button type="submit" class="btn btn-primary btn-sm mr-2">
@@ -117,5 +93,18 @@
     </div>
 
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            $("#sampah_id").select2({
+
+                placeholder: "Silahkan Pilih"
+
+            });
+
+        });
+    </script>
 
     @endsection

@@ -54,6 +54,7 @@
                                     <th>Alamat</th>
                                     <th>Kuantitas Sampah</th>
                                     <th>Jumlah Setor</th>
+                                    <th>Metode Pembayaran</th>
                                     <th>Status</th>
                                     @if(Auth::user()->role == 'admin')
                                     <th>Aksi</th>
@@ -66,19 +67,37 @@
 
                                 <tr>
                                     <td>{{++$i}}</td>
-                                    <td>{{$row->nama}}</td>
-                                    <td>{{$row->tanggal_pengambilan}}</td>
-                                    <td>{{$row->sampah->jenis_sampah}}</td>
+                                    <td>{{$row->warga->nama}}</td>
+                                    <td>{{$row->requestSetor->tanggal_pengambilan}}</td>
+                                    <td><?php
+                                            $jenissampah = [];
+                                            foreach ($allsampah as $value) {
+                                                foreach (explode(",", $row->requestSetor->sampah_id) as $key) {
+                                                    if ($value->id == $key) {
+                                                        array_push($jenissampah, $value->jenis_sampah);
+                                                    }
+                                                }
+                                            }
+                                            $stringarray = implode(', ', $jenissampah);
+                                            
+                                        ?>
+                                       {{ $stringarray}}
+                                    </td>
                                     <td>{{$row->warga->alamat}}</td>
                                     <td>{{$row->kuantitas_sampah}}</td>
-                                    <td>{{$row->jumlah_setor}}</td>
-                                    <td>{{$row->status}}</td>
+                                    <td>@currency($row->jumlah_setor)</td>
+                                    <td>
+                                    <label class="badge badge-primary">{{$row->method}}</label>
+                                    </td>
+                                    <td>
+                                     <label class="badge badge-success">{{$row->requestSetor->status}}</label>
+                                    </td>
                                     @if(Auth::user()->role =='admin')
                                     <td>
-                                        <form class="form-inline" action="{{route('request.destroy', $row ->id)}}" method="post">
+                                        <form class="form-inline" action="{{route('setor.destroy', $row ->id)}}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <a href="{{route('request.edit', $row ->id)}}" class="btn btn-outline-success "><i class="menu-icon fa fa-pencil"></i></a>
+                                            <!-- <a href="{{route('setor.edit', $row->id)}}" class="btn btn-outline-success "><i class="menu-icon fa fa-pencil"></i></a> -->
                                             <button class="btn btn-outline-danger ml-3" type="submit"><i class="menu-icon fa fa-trash"></i></button>
                                         </form>
                                     </td>
