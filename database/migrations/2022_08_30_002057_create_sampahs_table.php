@@ -20,6 +20,8 @@ class CreateSampahsTable extends Migration
             $table->string('gambar')->nullable();
             $table->string('deskripsi')->nullable();
             $table->integer('satuan')->nullable();
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }

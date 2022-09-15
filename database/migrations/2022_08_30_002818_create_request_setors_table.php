@@ -19,6 +19,8 @@ class CreateRequestSetorsTable extends Migration
             $table->string('sampah_id');
             $table->date('tanggal_pengambilan');
             $table->string('status');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }

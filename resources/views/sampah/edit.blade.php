@@ -57,16 +57,16 @@
 
                             <div class="row form-group">
                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Jenis Sampah</label></div>
-                                <div class="col-12 col-md-9"><input type="text" id="text-input" name="jenis_sampah" value="{{$data->jenis_sampah}}" placeholder="Text" class="form-control"></div>
+                                <div class="col-12 col-md-9"><input type="text" id="text-input" name="jenis_sampah" value="{{$data->jenis_sampah}}"   class="form-control"></div>
                             </div>
                             <div class="row form-group">
                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Nama Sampah</label></div>
-                                <div class="col-12 col-md-9"><input type="text" id="text-input" name="nama" value="{{$data->nama}}" placeholder="Text" class="form-control"></div>
+                                <div class="col-12 col-md-9"><input type="text" id="text-input" name="nama" value="{{$data->nama}}"   class="form-control"></div>
                             </div>
 
                             <div class="row form-group">
                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Harga</label></div>
-                                <div class="col-12 col-md-9"><input type="text" id="text-input" name="harga" value="{{$data->harga}}" placeholder="Text" class="form-control"></div>
+                                <div class="col-12 col-md-9"><input type="text" id="text-input" name="harga" value="{{$data->harga}}"   class="form-control"></div>
                             </div>
 
                             <div class="row form-group">
@@ -76,7 +76,7 @@
 
                             <div class="row form-group">
                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Deskripsi</label></div>
-                                <!-- <div class="col-12 col-md-9"><input type="text" id="text-input" name="deskripsi" placeholder="Text" class="form-control"></div> -->
+                                <!-- <div class="col-12 col-md-9"><input type="text" id="text-input" name="deskripsi"   class="form-control"></div> -->
                                 <textarea name="deskripsi" class="ml-3" id="" cols="100%" rows="5" form="sampah-form">{{$data->deskripsi}}</textarea>
                             </div>
 

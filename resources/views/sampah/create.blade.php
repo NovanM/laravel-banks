@@ -76,7 +76,7 @@
 
                             <div class="row form-group">
                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Deskripsi</label></div>
-                                <!-- <div class="col-12 col-md-9"><input type="text" id="text-input" name="deskripsi" placeholder="Text" class="form-control"></div> -->
+                                <!-- <div class="col-12 col-md-9"><input type="text" id="text-input" name="deskripsi"   class="form-control"></div> -->
                                 <textarea name="deskripsi" class="ml-3" id="" cols="100%" rows="5" form="sampah-form"></textarea>
                             </div>
                             

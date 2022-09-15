@@ -65,7 +65,7 @@
                           
                             <div class="row form-group">
                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Tanggal Pengambilan</label></div>
-                                <div class="col-12 col-md-9"><input type="date" id="text-input" name="tanggal_pengambilan" placeholder="Text" class="form-control"></div>
+                                <div class="col-12 col-md-9"><input type="date" id="text-input" name="tanggal_pengambilan"   class="form-control"></div>
                             </div>
             
 

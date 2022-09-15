@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WargaController extends Controller
 {
@@ -74,6 +75,7 @@ class WargaController extends Controller
     public function update(Request $request, $id)
     {
         //
+        
     }
 
     /**
@@ -85,5 +87,26 @@ class WargaController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function profile(){
+        $data = Auth::user();
+        return view('profile.index',compact('data'));
+    }
+    public function profileUpdate(Request $request){
+        
+        $data = User::find(Auth::user()->id);
+        $data->email = $request->get('email');
+        $data->tempat_lahir = $request->get('tempat_lahir');
+        $data->tanggal_lahir = $request->get('tanggal_lahir');
+        $data->nik = $request->get('nikr');
+        $data->no_hp = $request->get('no_hp');
+        $data->no_hp = $request->get('no_rekening');
+        if ($request->hasFile('images')) {
+            $request->file('images')->move('images/', $request->file('images')->getClientOriginalName());
+            $data->foto_ktp = $request->file('images')->getClientOriginalName();
+        }
+        $data->save();
+
+        return redirect('home/warga/profile')->with('success','Profil Berhasil di Perbarui');
     }
 }

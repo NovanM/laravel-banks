@@ -28,6 +28,8 @@ Route::group(['prefix' => '/home', 'middleware' => 'auth'], function(){
     Route::get('/dashboard', 'DashboardController@index');
     Route::resource('sampah', 'SampahController');
     Route::resource('produk', 'ProdukController');
+    Route::get('warga/profile', 'WargaController@profile')->name('profile');
+    Route::post('warga/update', 'WargaController@profileUpdate')->name('profile-update');
     Route::resource('warga', 'WargaController');
     Route::resource('setor', 'SetorSampahController');
     Route::resource('request', 'RequestSetorController');

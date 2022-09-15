@@ -33,9 +33,11 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
-                    <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();"><i class="fa fa-user"></i> Profile
+                    @if(Auth::user()->role == 'warga')
+                    <a class="nav-link" href="{{ route('profile') }}" 
+                    ><i class="fa fa-user"></i> Profile
                     </a>
+                    @endif
                 </div>
             </div>
 

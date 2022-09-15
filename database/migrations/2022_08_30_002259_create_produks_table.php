@@ -20,6 +20,8 @@ class CreateProduksTable extends Migration
             $table->string('gambar')->nullable();
             $table->string('deskripsi')->nullable();
             $table->integer('stok')->nullable();
+            
+            $table->softDeletes();
             $table->timestamps();
         });
     }
