@@ -16,6 +16,7 @@ class CreateSampahsTable extends Migration
         Schema::create('sampahs', function (Blueprint $table) {
             $table->id();
             $table->string('nama')->nullable();
+            $table->string('jenis_sampah')->nullable();
             $table->integer('harga')->nullable();
             $table->string('gambar')->nullable();
             $table->string('deskripsi')->nullable();

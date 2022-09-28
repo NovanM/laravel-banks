@@ -48,7 +48,7 @@
                         </div>
 
                         @endif
-                        <form action="{{route('sampah.update', $data->id)}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="sampah-form">
+                        <form action="{{route('produk.update', $data->id)}}" method="post" enctype="multipart/form-data" class="form-horizontal" id="produk-form">
                             @method('PATCH')
                             @csrf
 
@@ -56,11 +56,7 @@
 
 
                             <div class="row form-group">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Jenis Sampah</label></div>
-                                <div class="col-12 col-md-9"><input type="text" id="text-input" name="jenis_sampah" value="{{$data->jenis_sampah}}"   class="form-control"></div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Nama Sampah</label></div>
+                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Nama Produk</label></div>
                                 <div class="col-12 col-md-9"><input type="text" id="text-input" name="nama" value="{{$data->nama}}"   class="form-control"></div>
                             </div>
 
@@ -70,14 +66,14 @@
                             </div>
 
                             <div class="row form-group">
-                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Satuan</label></div>
-                                <div class="col-1 col-md-1"><input type="number" id="text-input" name="satuan" value="{{$data->satuan}}" placeholder="1" value="1" class="form-control"></div>
+                                <div class="col col-md-3"><label for="text-input" class=" form-control-label">Stok</label></div>
+                                <div class="col-1 col-md-1"><input type="number" id="text-input" name="stok" value="{{$data->stok}}" placeholder="1" value="1" class="form-control"></div>
                             </div>
 
                             <div class="row form-group">
                                 <div class="col col-md-3"><label for="text-input" class=" form-control-label">Deskripsi</label></div>
                                 <!-- <div class="col-12 col-md-9"><input type="text" id="text-input" name="deskripsi"   class="form-control"></div> -->
-                                <textarea name="deskripsi" class="ml-3" id="" cols="100%" rows="5" form="sampah-form">{{$data->deskripsi}}</textarea>
+                                <textarea name="deskripsi" class="ml-3" id="" cols="100%" rows="5" form="produk-form">{{$data->deskripsi}}</textarea>
                             </div>
 
 

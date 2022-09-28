@@ -63,7 +63,6 @@ class ProdukController extends Controller
         }
         $data->save();
         return redirect('home/produk')->with('success', 'Data Produk Ditambahkan');
-        
     }
 
     /**
@@ -86,6 +85,9 @@ class ProdukController extends Controller
     public function edit($id)
     {
         //
+        $data = Produk::find($id);
+        $pagename = 'Edit Data Produk';
+        return view('produk.edit', compact('pagename', 'data'));
     }
 
     /**
@@ -98,6 +100,26 @@ class ProdukController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'nama' => 'required',
+            'harga' => 'required',
+            'deskripsi' => 'required',
+            'stok' => 'required',
+        ]);
+        $data = Produk::find($id);
+
+        $data->nama = $request->get('nama');
+        $data->harga = $request->get('harga');
+        $data->deskripsi = $request->get('deskripsi');
+        $data->stok = $request->get('stok');
+
+
+        if ($request->hasFile('images')) {
+            $request->file('images')->move('images/', $request->file('images')->getClientOriginalName());
+            $data->gambar = $request->file('images')->getClientOriginalName();
+        }
+        $data->save();
+        return redirect('home/produk')->with('success', 'Data Produk Diperbaruhi');
     }
 
     /**
